@@ -1,0 +1,54 @@
+@(areas: List[Area])
+@main("Areas catalogue") {
+
+<h2>All areas</h2>
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+
+<script>
+ function del(urlToDelete) {
+  $.ajax({
+    url: urlToDelete,
+    type: 'DELETE',
+    success: function(results) {
+            // Refresh the page
+            location.reload();
+          }
+        });
+}
+</script>
+
+<table id="myTable">
+  <thead>
+    <tr><th>Name</th><th>Category</th><th>Rating</th><th>Location(Latitude, Longitude)</th><th></th></tr>
+  </thead>
+  <tbody>
+    @for(area <- areas) {
+
+      <tr>
+        <td><a href="@routes.Areas.details(area.name)">@area.name</a></td>
+        <td><a href="@routes.Areas.details(area.name)">@area.category</a></td>
+        <td><a href="@routes.Areas.details(area.name)">@area.rating</a></td>
+        <td><a href="@routes.Areas.details(area.name)">@area.latitude , @area.longitude</a></td>
+        <td>
+          <a href="@routes.Areas.details(area.name)"><i class="icon icon-pencil"></i></a> 
+          <a onclick="javascript:del('@routes.Areas.delete(area.name)')"><i class="icon icon-trash"></i></a> 
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+}
+<script type="text/javascript">
+
+  $(document).ready(function(){
+    $('#myTable').DataTable();
+  });
+  
+</script>
+<br>
+<br>
+<a href="@routes.Areas.newArea()" class="btn"><i class="icon-plus"></i> New area</a>

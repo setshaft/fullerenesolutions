@@ -1,0 +1,20 @@
+@(areaForm: Form[Area])
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("Area form") {
+  <h1>Area form</h1>
+  @helper.form(action = routes.Areas.save()) {
+    <fieldset>
+      <legend>Area (@areaForm("name").valueOr("New"))</legend>
+      @helper.inputText(areaForm("name"), '_label -> "Name")
+      @helper.inputText(areaForm("category"),'_label -> "Category")
+      @helper.textarea(areaForm("rating"), '_label -> "Rating")
+      @helper.textarea(areaForm("latitude"), '_label -> "Latitude")
+      @helper.textarea(areaForm("longitude"), '_label -> "Longitude")
+
+    </fieldset>
+      <input type="submit" class="btn btn-primary" value="Save">
+    <a class="btn" href="@routes.Application.index()">Cancel</a>
+  }
+}
